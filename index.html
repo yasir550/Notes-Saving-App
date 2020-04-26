@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/4e5af276e1.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Notes App</title>
+</head>
+<body>
+    <!-- container -->
+    <div class="container">
+        <!-- sidebar -->
+
+        <div class="sidebar">
+          <div class="logo">LOGO</div>
+        
+          <div class="button-group">
+              <button type="button" id="btn1" class="btn"><i class="fas fa-plus"></i>New Note</button>
+              <button type="button" id="btn2" class="btn">Show All Notes</button>
+            </div>
+        
+        </div>
+        
+        <!-- sidebar -->
+        
+        <!-- main -->
+        
+        <div class="main">
+            <h1>Welcome to Note Saving Application.<br>
+                Save Your Note Below.
+            </h1>
+            
+            <!-- form -->
+            <form id="formOne">
+                <input type="text" name="name" placeholder="Enter Your Name">
+                <input type="text" name="subject" placeholder="Enter Subject">
+                <textarea name="note" placeholder="Type Your Note Here"></textarea>
+                <button type="button" id="save-btn" onclick="saveNotes();">Save Note</button>
+            </form>
+            <!-- form -->
+
+        </div>
+
+        <!-- main -->
+        
+        <div class="main-1">
+            <div class="form">
+                <input type="text" onchange="" name="search" placeholder="Enter to search Notes" oninput="searchNotes(event)">
+                <button type="button" id="btn3" onclick="deleteNotes();">Delete All Notes</button>
+            </div>
+            
+            <!-- div to show all saved notes -->
+            <div class="all-notes">
+
+            </div>
+        </div>
+    </div>
+    <!-- container -->
+
+    <!-- script starts form here -->
+    <script>
+
+        // save btns and divs to variables
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var main =document.getElementsByClassName("main")[0];
+        var main1 = document.getElementsByClassName("main-1")[0];
+        
+        // function to show/hide specific divs on click
+        btn1.onclick=function()
+        {
+            main.style.visibility="visible";
+            main1.style.visibility="hidden";
+        }
+
+        btn2.onclick=function()
+        {
+            main.style.visibility="hidden";
+            main1.style.visibility="visible";
+        }
+
+        
+        // function to save notes in Local Storage
+        function saveNotes()
+        {
+            var name = document.forms["formOne"]["name"].value;
+        var subject = document.forms["formOne"]["subject"].value;
+        var note = document.forms["formOne"]["note"].value;
+            if(name && subject && note)
+            {
+               let allNotes = {name,subject,note};
+               let notesList = localStorage.getItem("notesList");
+               if(notesList)
+               {
+                   notesList = JSON.parse(notesList);
+                   notesList.push(allNotes);
+                   localStorage.setItem("notesList", JSON.stringify(notesList));
+                   clearForm();
+                   alert("Saved");
+                   showNotes();
+               }
+               else
+               {
+                   localStorage.setItem("notesList", JSON.stringify([allNotes]));
+                   clearForm();
+                   alert("Saved");
+                   showNotes();
+               }
+            }
+            else
+            {
+                alert("Fill all fields")
+            }
+        }
+        
+        // function to show all notes in a div stored in Local Storage
+        function showNotes()
+        {
+            let allnotesList = document.getElementsByClassName("all-notes")[0];
+            let notesList = localStorage.getItem("notesList");
+            if(notesList)
+            {
+                notesList=JSON.parse(notesList);
+                let noteHtml="";
+                notesList.forEach((listitem,index)=>{
+
+                    noteHtml += `<div class="single-note" draggable="true">
+                        
+                        <div class="subject"><b>${listitem.subject}</b></div>
+                        <div class="note">${listitem.note}</div>
+                        <div class="name"><b>Author:</b> ${listitem.name}</div>
+                        <span class="cross" onclick="clearNote(${index})">Delete <span>X</span></span>
+                        
+                        </div>`
+                });
+                allnotesList.innerHTML=noteHtml;
+            }
+            else
+            {
+                allnotesList.innerHTML=`<h1 style="text-align:center; padding:20px 0px">No Item Found.</h1>`
+            }
+        }
+        showNotes();
+        
+        // function to search any relevant note displayed in the specific area.
+        function searchNotes(e)
+        {
+            let query = e.target.value;
+            let notesList = localStorage.getItem("notesList")
+            if(!notesList)
+            {
+                return false;
+            }
+            else
+            {
+                notesList=JSON.parse(notesList);
+                let noteItems = notesList.filter(listitem=>{
+                    
+                    return listitem.subject.toLowerCase().includes(query);
+
+                });
+                let noteHtml="";
+                if(noteItems.length)
+                    {
+                        noteItems.forEach((noteItem,index)=>{
+
+                            noteHtml += `<div class="single-note" draggable="true">
+                        
+                        <div class="subject"><b>${noteItem.subject}</b></div>
+                        <div class="note">${noteItem.note}</div>
+                        <div class="name"><b>Author:</b> ${noteItem.name}</div>
+                        <span class="cross" onclick="clearNote(${index})">Delete <span>X</span></span>
+                        
+                        </div>`
+                        });
+                        document.getElementsByClassName("all-notes")[0].innerHTML=noteHtml;
+                        
+
+                    }
+                    else
+                    {
+                        document.getElementsByClassName("all-notes")[0].innerHTML=`<h1 style="text-align:center; padding:20px 0px">No Item Found.</h1>`
+                    }
+            }
+        }
+        
+        // function to remove stored notes from local storage and specific div
+        function deleteNotes(e)
+        {
+            let notesList= localStorage.getItem("notesList");
+            if(notesList)
+            {
+                localStorage.removeItem("notesList");
+                alert("all Notes deleted");
+                showNotes();
+            }
+            else
+            {
+                alert("No Item Found")
+            }
+        }
+         
+        //  function to clear form input fields after the user click save button
+        function clearForm()
+        {
+            document.forms["formOne"]["name"].value="";
+            document.forms["formOne"]["subject"].value="";
+            document.forms["formOne"]["note"].value="";
+        }
+        
+        // function to delete individual note from local storage and also from specific area in the document
+        function clearNote(index)
+        {
+            let notesList = JSON.parse(localStorage.getItem("notesList"));
+            notesList.splice(index, 1);
+            localStorage.setItem("notesList", JSON.stringify(notesList));
+            showNotes();
+        }
+        
+    </script>
+</body>
+</html>

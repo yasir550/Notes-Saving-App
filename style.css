@@ -1,0 +1,239 @@
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto' ;
+}
+.container
+{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.sidebar
+{
+    width: 15%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: #2c3e50;
+}
+.logo
+{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: aliceblue;
+}
+.button-group
+{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.btn
+{
+    clip-path: polygon(0% 0%, 90% 1%, 100% 50%, 90% 100%, 0% 100%);
+    height: 40%;
+    background: black;
+    border: none;
+    outline:none;
+    color: aliceblue;
+    cursor: pointer;
+    font-size: 1.3em;
+}
+.btn>i
+{
+    margin-right: 10px;
+    padding: 6px;
+    color: black;
+    background: green;
+    border-radius: 50%;
+}
+.main
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85%;
+    height: 100%;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    border-left: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.main>h1
+{
+    color: white;
+    font-size: 3em;
+}
+.main-1
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85%;
+    height: 100%;
+    background: #333333; 
+    transition: all .1s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 5px solid black;
+    justify-content: space-around;
+    visibility: hidden;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+}
+#formOne
+{
+  margin-top: 100px;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+#formOne>input
+{
+    width: 100%;
+    height: 40px;
+    border: 3px solid black;
+    outline: none;
+    border-radius:10px;
+    padding-left: 5px;
+    background: none;
+    color: aliceblue;
+}
+#formOne>input::placeholder
+{
+    color: aliceblue;
+}
+#formOne>textarea
+{
+    width: 100%;
+    height: 100px;
+    background: none;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 5px 0px 0px 5px;
+    color: aliceblue;
+    outline: none;
+}
+#formOne>textarea::placeholder
+{
+    color: aliceblue;
+}
+#formOne>button
+{
+    width: 103%;
+    height: 50px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: aliceblue;
+    font-size: 1em;
+    border-radius: 10px;
+    background-color: black;
+}
+.form
+{
+   width: 300px;
+   height: 130px;
+   display: flex;
+   /* border: 1px solid white; */
+   flex-direction: column;
+   justify-content: space-evenly; 
+}
+.form>input
+{
+    width: 100%;
+    height: 45px;
+    background: none;
+    border: 3px solid black;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 5px;
+    color: aliceblue;
+}
+.form>input::placeholder
+{
+    color: aliceblue;
+}
+.form>button
+{
+    width: 100%;
+    height: 45px;
+    background: black;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: aliceblue;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.all-notes
+{
+    width: 100%;
+    height: 60%;
+    border-top: 3px solid black;
+}
+.single-note
+{
+    width: 250px;
+    height: 40%;
+    float: left;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background: black;
+    color: aliceblue;
+    position: relative;
+}
+.subject, .name
+{
+    font-size: 1.3em;
+}
+.subject
+{
+    padding: 5px;
+    background: aliceblue;
+    color: black;
+}
+.note
+{
+    text-align: justify;
+    word-break: break-all;
+}
+.cross
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.cross>span
+{
+    padding: 5px 8px;
+    background: aliceblue;
+    color: black;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.cross>span:hover
+{
+    background: red;
+    color: aliceblue;
+    transition: all .2s;
+    
+}
